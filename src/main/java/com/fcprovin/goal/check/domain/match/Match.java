@@ -25,21 +25,22 @@ public class Match extends BaseTime {
 
     private String otherTeamName;
 
+    private Integer lose;
+
     private LocalDateTime date;
 
     @OneToMany(mappedBy = "match")
     private final List<Goal> goals = new ArrayList<>();
 
     @Builder
-    public Match(Long id, String otherTeamName, LocalDateTime date) {
-        this.id = id;
-        this.otherTeamName = otherTeamName;
-        this.date = date;
-    }
-
     public Match(String otherTeamName, LocalDateTime date) {
         this.otherTeamName = otherTeamName;
         this.date = date;
+        this.lose = 0;
+    }
+
+    public void setLose(Integer lose) {
+        this.lose = lose;
     }
 }
 

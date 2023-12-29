@@ -1,13 +1,15 @@
 package com.fcprovin.goal.check.domain.member;
 
 import com.fcprovin.goal.check.common.entity.BaseTime;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fcprovin.goal.check.domain.assist.Assist;
+import com.fcprovin.goal.check.domain.goal.Goal;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static lombok.AccessLevel.PROTECTED;
 
@@ -24,6 +26,12 @@ public class Member extends BaseTime {
     private String name;
 
     private String password;
+
+    @OneToMany(mappedBy = "member")
+    private final List<Goal> goals = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private final List<Assist> assists = new ArrayList<>();
 
     @Builder
     public Member(Long id, String name, String password) {

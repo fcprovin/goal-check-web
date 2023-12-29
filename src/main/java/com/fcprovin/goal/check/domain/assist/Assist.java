@@ -33,13 +33,19 @@ public class Assist extends BaseTime {
     @Builder
     public Assist(Long id, Member member, Goal goal) {
         this.id = id;
-        this.member = member;
         this.goal = goal;
+
+        setMember(member);
     }
 
     public Assist(Member member, Goal goal) {
         this.member = member;
         this.goal = goal;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+        this.member.getAssists().add(this);
     }
 }
 
