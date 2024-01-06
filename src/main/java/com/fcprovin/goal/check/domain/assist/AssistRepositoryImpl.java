@@ -22,7 +22,7 @@ public class AssistRepositoryImpl implements AssistQueryRepository {
 		return queryFactory
 				.select(assist.count())
 				.from(assist)
-				.join(assist.member, member).fetchJoin()
+				.innerJoin(assist.member, member)
 				.where(assist.member.id.eq(id))
 				.fetchOne();
 	}
