@@ -29,7 +29,7 @@ public class GoalRepositoryImpl implements GoalQueryRepository {
 		return queryFactory
 				.select(goal.count())
 				.from(goal)
-				.join(goal.member, member).fetchJoin()
+				.innerJoin(goal.member, member)
 				.where(goal.member.id.eq(id))
 				.fetchOne();
 	}
