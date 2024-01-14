@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.CascadeType.REMOVE;
 import static lombok.AccessLevel.PROTECTED;
 
 @Getter
@@ -27,10 +28,10 @@ public class Member extends BaseTime {
 
     private String password;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = REMOVE)
     private final List<Goal> goals = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = REMOVE)
     private final List<Assist> assists = new ArrayList<>();
 
     @Builder
