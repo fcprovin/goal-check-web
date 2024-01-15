@@ -21,6 +21,7 @@ public class GoalRepositoryImpl implements GoalQueryRepository {
 		return ofNullable(queryFactory
 				.selectFrom(goal)
 				.join(goal.match, match).fetchJoin()
+				.where(goal.id.eq(id))
 				.fetchOne());
 	}
 
