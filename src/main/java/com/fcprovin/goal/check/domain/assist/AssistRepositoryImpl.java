@@ -34,6 +34,7 @@ public class AssistRepositoryImpl implements AssistQueryRepository {
 				.join(assist.goal, goal).fetchJoin()
 				.join(assist.goal.match, match).fetchJoin()
 				.where(assist.member.id.eq(id))
+				.orderBy(assist.createdDate.desc())
 				.fetch();
 	}
 

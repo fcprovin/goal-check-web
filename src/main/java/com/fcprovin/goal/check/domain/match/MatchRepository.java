@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface MatchRepository extends JpaRepository<Match, Long> {
 
-	List<Match> findAllByDateBetween(LocalDateTime start, LocalDateTime end);
+	List<Match> findAllByDateBetweenOrderByCreatedDateDesc(LocalDateTime start, LocalDateTime end);
 }

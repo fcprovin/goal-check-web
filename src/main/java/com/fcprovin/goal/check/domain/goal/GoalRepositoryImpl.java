@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.Optional;
 
+import static com.fcprovin.goal.check.domain.assist.QAssist.assist;
 import static com.fcprovin.goal.check.domain.goal.QGoal.goal;
 import static com.fcprovin.goal.check.domain.match.QMatch.match;
 import static com.fcprovin.goal.check.domain.member.QMember.member;
@@ -51,7 +52,9 @@ public class GoalRepositoryImpl implements GoalQueryRepository {
 				.selectFrom(goal)
 				.join(goal.match, match).fetchJoin()
 				.join(goal.member, member).fetchJoin()
+				.leftJoin(goal.assist, assist).fetchJoin()
 				.where(goal.member.id.eq(id))
+				.orderBy(goal.createdDate.desc())
 				.fetch();
 	}
 
