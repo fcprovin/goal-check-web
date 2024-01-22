@@ -6,7 +6,7 @@
       data-theme="theme-default"
       data-assets-path="/assets/"
       data-template="vertical-menu-template-free">
-<head th:replace="~{/fragment/header :: header}">
+<head th:replace="~{fragment/header :: header}">
   <title>Login</title>
 </head>
 <body>
@@ -21,7 +21,7 @@
           <!-- Logo -->
           <div class="app-brand justify-content-center">
             <a th:href="@{/}" class="app-brand-link gap-2">
-              <span class="app-brand-logo demo"><svg th:replace="~{/fragment/logo :: logo}"></svg></span>
+              <span class="app-brand-logo demo"><svg th:replace="~{fragment/logo :: logo}"></svg></span>
               <span class="app-brand-text demo text-body fw-bolder">골첵</span>
             </a>
           </div>
@@ -66,6 +66,6 @@
 </div>
 
 <!-- / Content -->
-<th:block th:replace="~{/fragment/script :: script}"></th:block>
+<th:block th:replace="~{fragment/script :: script}"></th:block>
 </body>
 </html>
