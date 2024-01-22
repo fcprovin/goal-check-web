@@ -4,8 +4,9 @@ import com.fcprovin.goal.check.web.dto.form.GoalAddForm;
 import com.fcprovin.goal.check.web.dto.form.MatchAddForm;
 import com.fcprovin.goal.check.web.dto.form.MatchModifyForm;
 import com.fcprovin.goal.check.web.service.MatchService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -16,8 +17,10 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 
+import static java.time.Month.JANUARY;
 import static java.time.format.DateTimeFormatter.ofPattern;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/match")
@@ -26,7 +29,13 @@ public class MatchController {
 	private final MatchService matchService;
 	private final LocalDate startDate = LocalDate.of(2024, 1, 1);
 
-	@ModelAttribute
+	@ModelAttribute("servletPath")
+	public String servletPath(HttpServletRequest request) {
+		log.info("request.getServletPath() = {}", request.getServletPath());
+		return request.getServletPath();
+	}
+
+	@ModelAttribute("yearList")
 	public List<String> yearList() {
 		return startDate
 				.datesUntil(LocalDate.now(), Period.ofYears(1))
@@ -36,14 +45,14 @@ public class MatchController {
 
 	@GetMapping
 	public String list(@RequestParam(required = false, defaultValue = "2024")
-						   @DateTimeFormat(pattern = "yyyy") LocalDate year, Model model) {
-		model.addAttribute("list", matchService.list(year));
+						   int year, Model model) {
+		model.addAttribute("list", matchService.list(LocalDate.of(year, JANUARY, 1)));
 		return "/match/list";
 	}
 
 	@GetMapping("/{id}")
 	public String detail(@PathVariable Long id, Model model) {
-		model.addAttribute("match", matchService.detail(id));
+		model.addAttribute("item", matchService.detail(id));
 		return "/match/detail";
 	}
 
@@ -70,19 +79,21 @@ public class MatchController {
 		matchService.remove(id);
 
 		attributes.addAttribute("list", matchService.list(startDate));
-		return "redirect:/match/list";
+		return "redirect:/match";
 	}
 
 	@GetMapping("/{matchId}/goal/add")
     public String goalAdd(@PathVariable Long matchId, Model model) {
-		model.addAttribute("member", matchService.memberList());
-        model.addAttribute("item", new GoalAddForm(matchId));
+		model.addAttribute("memberList", matchService.memberList());
+        model.addAttribute("item", new GoalAddForm());
         return "/match/goal/add";
     }
 
-	@PostMapping("/goal/add")
-    public String goalAdd(@Validated @ModelAttribute("item") GoalAddForm form, RedirectAttributes attributes) {
-        attributes.addAttribute("id", matchService.goalAdd(form).getId());
+	@PostMapping("/{matchId}/goal/add")
+    public String goalAdd(@PathVariable Long matchId,
+						  @Validated @ModelAttribute("item") GoalAddForm form,
+						  RedirectAttributes attributes) {
+        attributes.addAttribute("id", matchService.goalAdd(matchId, form).getId());
         return "redirect:/match/{id}";
     }
 
