@@ -36,7 +36,9 @@ out/
 ### VS Code ###
 .vscode/
 
-application-jwt.yml
+application-user.yml
 application-db.yml
+data.sql
+sql
 
 generated

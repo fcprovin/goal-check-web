@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/default :: layout(~{::title}, ~{::div})}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<!-- Form controls -->
+<div class="card mb-4">
+	<h5 class="card-header">골 등록</h5>
+	<form th:action th:object="${item}" method="post">
+		<div class="card-body">
+			<div class="mb-3">
+				<label for="goalMemberId" class="form-label">골</label>
+				<select class="form-select" id="goalMemberId" th:field="*{goalMemberId}">
+					<option value="">==회원 선택==</option>
+					<option th:each="member : ${memberList}" th:value="${member.id}" th:text="${member.name}"></option>
+				</select>
+			</div>
+			<div class="mb-3">
+				<label for="assistMemberId" class="form-label">도움</label>
+				<select class="form-select" id="assistMemberId" th:field="*{assistMemberId}">
+					<option value="">==회원 선택==</option>
+					<option th:each="member : ${memberList}" th:value="${member.id}" th:text="${member.name}"></option>
+				</select>
+			</div>
+			<button class="btn btn-primary" type="submit">등록</button>
+		</div>
+	</form>
+</div>
+</html>
+
+

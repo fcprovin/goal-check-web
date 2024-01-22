@@ -41,7 +41,7 @@ class MatchRepositoryTest {
 		em.persist(match);
 
 		//when
-		List<Match> matches = matchRepository.findAllByDateBetween(LocalDate.of(2023, 12, 1).atStartOfDay(),
+		List<Match> matches = matchRepository.findAllByDateBetweenOrderByCreatedDateDesc(LocalDate.of(2023, 12, 1).atStartOfDay(),
 				LocalDate.of(2023, 12, 31).atTime(LocalTime.MAX));
 
 		//then
