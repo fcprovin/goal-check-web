@@ -1,9 +1,17 @@
+server:
+  port: 8888
+
 spring:
+  profiles:
+    include:
+      - db
+      - user
   jpa:
     properties:
       hibernate:
         format_sql: true
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
-logging.level:
-  org.hibernate.SQL: debug
+logging:
+  level:
+    org.hibernate.SQL: debug
