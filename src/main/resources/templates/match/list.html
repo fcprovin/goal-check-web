@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/default :: layout(~{::title}, ~{::div})}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<!-- Basic Bootstrap Table -->
+<div class="card">
+	<h5 class="card-header">매치 리스트</h5>
+</div>
+<div class="card-group navbar mb-0">
+	<div class="me-auto">
+		<div class="input-group">
+			<span class="input-group-text">총 건수</span>
+			<span class="input-group-text value" th:text="${list.size()}">136525</span>
+		</div>
+	</div>
+	<div class="col-auto">
+		<a th:href="@{/match/add}" class="btn btn-primary" role="button"><i class="bx bx-edit"></i> 등록</a>
+	</div>
+</div>
+<div class="card">
+	<div class="table-responsive text-nowrap">
+		<table class="table">
+			<thead>
+			<tr>
+				<th>ID</th>
+				<th>상대팀</th>
+				<th>매치일자</th>
+				<th>득점</th>
+				<th>실점</th>
+				<th>삭제</th>
+			</tr>
+			</thead>
+			<tbody class="table-border-bottom-0">
+			<tr th:each="item : ${list}">
+				<td><a th:href="@{/match/{id}(id = ${item.id})}"><strong th:text="${item.id}">1</strong></a></td>
+				<td th:text="${item.otherTeamName}">상대팀</td>
+				<td th:text="${#temporals.format(item.date, 'yyyy-MM-dd HH:mm')}">2011-01-13 12:00</td>
+				<td th:text="${item.goalCount}">0</td>
+				<td th:text="${item.loseCount}">0</td>
+				<td>
+					<form th:action="@{/match/remove/{id}(id = ${item.id})}" th:object="${item}" method="post">
+						<button class="btn btn-primary" type="submit">삭제</button>
+					</form>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<!--/ Basic Bootstrap Table -->
+</html>

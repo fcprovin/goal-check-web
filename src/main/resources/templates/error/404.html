@@ -6,7 +6,7 @@
 	  data-theme="theme-default"
 	  data-assets-path="/assets/"
 	  data-template="vertical-menu-template-free">
-<head th:replace="/fragment/header :: header">
+<head th:replace="~{/fragment/header :: header}">
   <title>404 Error</title>
 </head>
 <body>
@@ -29,6 +29,6 @@
 	</div>
 </div>
 <!-- /Error -->
-<th:block th:replace="/fragment/script :: script"></th:block>
+<th:block th:replace="~{/fragment/script :: script}"></th:block>
 </body>
 </html>
