@@ -47,19 +47,19 @@ public class MatchController {
 	public String list(@RequestParam(required = false, defaultValue = "2024")
 						   int year, Model model) {
 		model.addAttribute("list", matchService.list(LocalDate.of(year, JANUARY, 1)));
-		return "/match/list";
+		return "match/list";
 	}
 
 	@GetMapping("/{id}")
 	public String detail(@PathVariable Long id, Model model) {
 		model.addAttribute("item", matchService.detail(id));
-		return "/match/detail";
+		return "match/detail";
 	}
 
 	@GetMapping("/add")
     public String add(Model model) {
         model.addAttribute("item", new MatchAddForm());
-        return "/match/add";
+        return "match/add";
     }
 
 	@PostMapping("/add")
@@ -86,7 +86,7 @@ public class MatchController {
     public String goalAdd(@PathVariable Long matchId, Model model) {
 		model.addAttribute("memberList", matchService.memberList());
         model.addAttribute("item", new GoalAddForm());
-        return "/match/goal/add";
+        return "match/goal/add";
     }
 
 	@PostMapping("/{matchId}/goal/add")
