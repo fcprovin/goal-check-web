@@ -3,9 +3,6 @@ package com.fcprovin.goal.check.web.dto.response;
 import com.fcprovin.goal.check.domain.member.Member;
 import lombok.Data;
 
-import static com.fcprovin.goal.check.web.value.AttackPoint.ASSIST;
-import static com.fcprovin.goal.check.web.value.AttackPoint.GOAL;
-
 @Data
 public class MemberResponse {
 
@@ -27,11 +24,11 @@ public class MemberResponse {
 
 	public void setGoalCount(Long goalCount) {
 		this.goalCount = goalCount;
-		this.attackPoint += GOAL.getPoint() * goalCount;
+		this.attackPoint += goalCount;
 	}
 
 	public void setAssistCount(Long assistCount) {
 		this.assistCount = assistCount;
-		this.attackPoint += ASSIST.getPoint() * assistCount;
+		this.attackPoint += assistCount;
 	}
 }
