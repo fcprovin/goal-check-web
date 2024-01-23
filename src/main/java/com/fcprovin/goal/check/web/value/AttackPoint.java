@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum AttackPoint {
 
-	GOAL(3),
+	GOAL(1),
 	ASSIST(1);
 
 	private final int point;
