@@ -5,7 +5,7 @@
 <!-- Form controls -->
 <div class="card mb-4">
 	<h5 class="card-header">매치 상세</h5>
-	<form th:action="@{/match/lose/{id}(id = ${item.id})}" th:object="${item}" method="post">
+	<form th:action="@{/match/modify/{id}(id = ${item.id})}" th:object="${item}" method="post">
 		<div class="card-body">
 			<div class="mb-3">
 				<label for="id" class="form-label">ID</label>
@@ -13,11 +13,11 @@
 			</div>
 			<div class="mb-3">
 				<label for="otherTeamName" class="form-label">상대팀명</label>
-				<input type="text" class="form-control" id="otherTeamName" th:value="${item.otherTeamName}" readonly/>
+				<input type="text" class="form-control" id="otherTeamName" th:field="*{otherTeamName}"/>
 			</div>
 			<div class="mb-3">
-				<label for="date" class="form-label">매치일자</label>
-				<input type="text" class="form-control" id="date" th:value="${item.date}" readonly/>
+				<label for="date" class="col-md-2 col-form-label">매치일자</label>
+				<input type="datetime-local" class="form-control" id="date" th:field="*{date}"/>
 			</div>
 			<div class="mb-3">
 				<label for="goalCount" class="col-md-2 col-form-label">득점</label>

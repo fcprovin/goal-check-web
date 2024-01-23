@@ -39,6 +39,14 @@ public class Match extends BaseTime {
         this.lose = 0;
     }
 
+    public void setOtherTeamName(String otherTeamName) {
+        this.otherTeamName = otherTeamName;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
     public void setLose(Integer lose) {
         this.lose = lose;
     }

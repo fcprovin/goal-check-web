@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static jakarta.persistence.CascadeType.REMOVE;
+import static java.util.Objects.nonNull;
 import static lombok.AccessLevel.PROTECTED;
 
 @Getter
@@ -26,7 +27,8 @@ public class Member extends BaseTime {
 
     private String name;
 
-    private String password;
+    @Enumerated(value = EnumType.STRING)
+    private MemberType type;
 
     @OneToMany(mappedBy = "member", cascade = REMOVE)
     private final List<Goal> goals = new ArrayList<>();
@@ -35,13 +37,18 @@ public class Member extends BaseTime {
     private final List<Assist> assists = new ArrayList<>();
 
     @Builder
-    public Member(Long id, String name, String password) {
+    public Member(Long id, String name, MemberType type) {
         this.id = id;
         this.name = name;
-        this.password = password;
+        this.type = nonNull(type) ? type : MemberType.MEMBER;
     }
 
     public Member(String name) {
         this.name = name;
+    }
+
+    public Member(String name, MemberType type) {
+        this.name = name;
+        this.type = type;
     }
 }

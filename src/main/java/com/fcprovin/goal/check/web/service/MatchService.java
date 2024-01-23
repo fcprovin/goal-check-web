@@ -65,11 +65,21 @@ public class MatchService {
 		return matchRepository.save(form.toEntity());
 	}
 
-	public void lose(Long id, MatchModifyForm form) {
+	public void modify(Long id, MatchModifyForm form) {
 		Match match = matchRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Match not found"));
 
-		match.setLose(form.getLose());
+		if (!match.getOtherTeamName().equals(form.getOtherTeamName())) {
+			match.setOtherTeamName(form.getOtherTeamName());
+		}
+
+		if (!match.getDate().equals(form.getDate())) {
+			match.setDate(form.getDate());
+		}
+
+		if (!match.getLose().equals(form.getLose())) {
+			match.setLose(form.getLose());
+		}
 	}
 
 	public void remove(Long id) {

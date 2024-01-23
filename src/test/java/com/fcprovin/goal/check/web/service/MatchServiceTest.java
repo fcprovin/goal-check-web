@@ -12,7 +12,6 @@ import com.fcprovin.goal.check.web.dto.response.MatchDetailResponse;
 import com.fcprovin.goal.check.web.dto.response.MatchResponse;
 import com.fcprovin.goal.check.web.dto.response.MemberResponse;
 import jakarta.persistence.EntityManager;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @Transactional
 @SpringBootTest
@@ -99,10 +98,11 @@ class MatchServiceTest {
 	}
 
 	@Test
-	void lose() {
+	void modify() {
 		Match match = matchRepository.findAll().stream().findAny().get();
 
-		matchService.lose(match.getId(), new MatchModifyForm(3));
+		matchService.modify(match.getId(), MatchModifyForm.builder().lose(3).build());
+		em.flush();
 
 		MatchDetailResponse response = matchService.detail(match.getId());
 
