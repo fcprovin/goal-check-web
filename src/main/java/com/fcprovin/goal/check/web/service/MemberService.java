@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.fcprovin.goal.check.domain.member.MemberType.MEMBER;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -22,7 +24,7 @@ public class MemberService {
 	private final AssistRepository assistRepository;
 
 	public List<MemberResponse> list() {
-		return memberRepository.findAll().stream()
+		return memberRepository.findByType(MEMBER).stream()
 				.map(MemberResponse::of)
 				.peek(this::setAttackPoint)
 				.toList();
