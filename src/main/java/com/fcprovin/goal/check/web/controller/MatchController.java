@@ -68,9 +68,9 @@ public class MatchController {
         return "redirect:/match/{id}";
     }
 
-	@PostMapping("/lose/{id}")
-    public String lose(@PathVariable Long id, @Validated @ModelAttribute("item") MatchModifyForm form) {
-        matchService.lose(id, form);
+	@PostMapping("/modify/{id}")
+    public String modify(@PathVariable Long id, @Validated @ModelAttribute("item") MatchModifyForm form) {
+        matchService.modify(id, form);
         return "redirect:/match/{id}";
     }
 
