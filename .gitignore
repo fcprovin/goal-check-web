@@ -38,7 +38,8 @@ out/
 
 application-user.yml
 application-db.yml
-data.sql
+application-slack.yml
+
 sql
 
 generated

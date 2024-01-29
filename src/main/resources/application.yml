@@ -6,6 +6,7 @@ spring:
     include:
       - db
       - user
+      - slack
   jpa:
     properties:
       hibernate:
