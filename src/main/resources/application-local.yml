@@ -1,0 +1,7 @@
+spring:
+  thymeleaf:
+    cache: false
+    prefix: file:///Volumes/Dev/repo/ij/goal-check-web/src/main/resources/templates/
+  web:
+    resources:
+      static-locations: file:///Volumes/Dev/repo/ij/goal-check-web/src/main/resources/static/
