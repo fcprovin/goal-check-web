@@ -3,6 +3,12 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <!-- Form controls -->
+<div class="card-group navbar mb-0">
+	<div class="col-auto">
+		<a th:href="@{/match/{id}/attend(id = ${item.id})}" class="btn btn-sm btn-outline-primary" role="button"><i class="bx bx-calendar-check"></i> 출석</a>
+		<a th:href="@{/match/{id}/goal/add(id = ${item.id})}" class="btn btn-sm btn-outline-primary" role="button"><i class="bx bx-edit"></i> 골 등록</a>
+	</div>
+</div>
 <div class="card mb-4">
 	<h5 class="card-header">매치 상세</h5>
 	<form th:action="@{/match/modify/{id}(id = ${item.id})}" th:object="${item}" method="post">
@@ -32,12 +38,8 @@
 		</div>
 	</form>
 </div>
-<div class="card-group navbar mb-0">
-	<div class="col-auto">
-		<a th:href="@{/match/{id}/goal/add(id = ${item.id})}" class="btn btn-primary" role="button"><i class="bx bx-edit"></i> 골 등록</a>
-	</div>
-</div>
 <div class="card">
+	<h5 class="card-header">매치 득점</h5>
 	<div class="table-responsive text-nowrap">
 		<table class="table">
 			<thead>
