@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/default :: layout(~{::title}, ~{::div})}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<!-- Form controls -->
+<div class="card mb-4">
+	<h5 class="card-header">회원 상세</h5>
+	<form th:action="@{/me/password}" th:object="${member}" method="post">
+		<div class="card-body">
+			<div class="mb-3">
+				<label for="id" class="form-label">ID</label>
+				<input type="text" class="form-control" id="id" th:value="${member.id}" readonly/>
+			</div>
+			<div class="mb-3">
+				<label for="name" class="form-label">이름</label>
+				<input type="text" class="form-control" id="name" th:value="${member.name}" readonly/>
+			</div>
+			<div class="mb-3">
+				<label for="goalCount" class="col-md-2 col-form-label">득점</label>
+				<input type="number" class="form-control" id="goalCount" th:value="${member.goalCount}" readonly/>
+			</div>
+			<div class="mb-3">
+				<label for="assistCount" class="col-md-2 col-form-label">도움</label>
+				<input type="number" class="form-control" id="assistCount" th:value="${member.assistCount}" readonly/>
+			</div>
+			<div class="mb-3">
+				<label for="attackPoint" class="col-md-2 col-form-label">공격포인트</label>
+				<input type="number" class="form-control" id="attackPoint" th:value="${member.attackPoint}" readonly/>
+			</div>
+			<div class="mb-3">
+				<label for="password" class="col-md-2 col-form-label">비밀번호 수정</label>
+				<input type="password" class="form-control" id="password" th:name="password"/>
+			</div>
+			<button class="btn btn-primary" type="submit">수정</button>
+		</div>
+	</form>
+</div>
+<div class="card">
+	<h5 class="card-header">금주 매치리스트</h5>
+	<div class="table-responsive text-nowrap">
+		<table class="table">
+			<thead>
+			<tr>
+				<th>상대팀명</th>
+				<th>매치일자</th>
+				<th>출석</th>
+			</tr>
+			</thead>
+			<tbody class="table-border-bottom-0">
+			<tr th:each="item : ${matches}">
+				<td th:text="${item.otherTeamName}">홍길동</td>
+				<td th:text="${#temporals.format(item.matchDate, 'yyyy-MM-dd HH:mm')}">오민성</td>
+				<td th:if="${item.attend}" th:text="${#temporals.format(item.attendDate, 'yyyy-MM-dd HH:mm')}"></td>
+				<td th:unless="${item.attend}">
+					<form th:action="@{/me/attend}" method="post">
+						<input type="hidden" th:value="${item.id}" th:name="id">
+						<button class="btn btn-primary" type="submit">출석</button>
+					</form>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+</html>
+
+

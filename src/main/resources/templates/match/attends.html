@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/default :: layout(~{::title}, ~{::div})}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<!-- Basic Bootstrap Table -->
+<div class="card">
+	<h5 class="card-header">출석 리스트</h5>
+</div>
+<div class="card-group navbar mb-0">
+	<div class="me-auto">
+		<div class="input-group">
+			<span class="input-group-text">총 건수</span>
+			<span class="input-group-text value" th:text="${list.size()}">136525</span>
+		</div>
+	</div>
+</div>
+<div class="card">
+	<div class="table-responsive text-nowrap">
+		<table class="table">
+			<thead>
+			<tr>
+				<th>회원명</th>
+				<th>출석일자</th>
+			</tr>
+			</thead>
+			<tbody class="table-border-bottom-0">
+			<tr th:each="item : ${list}">
+				<td th:text="${item.memberName}">홍길동</td>
+				<td th:text="${#temporals.format(item.attendDate, 'yyyy-MM-dd HH:mm')}">2011-01-13 12:00</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<!--/ Basic Bootstrap Table -->
+</html>

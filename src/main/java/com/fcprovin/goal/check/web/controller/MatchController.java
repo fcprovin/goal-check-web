@@ -56,6 +56,12 @@ public class MatchController {
 		return "match/detail";
 	}
 
+	@GetMapping("/{id}/attend")
+	public String attends(@PathVariable Long id, Model model) {
+		model.addAttribute("list", matchService.attends(id));
+		return "match/attends";
+	}
+
 	@GetMapping("/add")
     public String add(Model model) {
         model.addAttribute("item", new MatchAddForm());

@@ -23,6 +23,12 @@
 
 <!-- Function JS -->
 <script>
-
+    $(function () {
+		$(".logout").on("click", function (){
+		   $("#logout").submit();
+		});
+	});
 </script>
+<form id="logout" th:action="@{/logout}" method="post">
+</form>
 </th:block>

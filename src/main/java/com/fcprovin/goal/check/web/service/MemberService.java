@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static com.fcprovin.goal.check.domain.member.MemberType.MEMBER;
+import static java.util.Comparator.comparing;
 
 @Service
 @Transactional(readOnly = true)
@@ -27,6 +28,7 @@ public class MemberService {
 		return memberRepository.findByType(MEMBER).stream()
 				.map(MemberResponse::of)
 				.peek(this::setAttackPoint)
+				.sorted(comparing(MemberResponse::getAttackPoint).reversed())
 				.toList();
 	}
 

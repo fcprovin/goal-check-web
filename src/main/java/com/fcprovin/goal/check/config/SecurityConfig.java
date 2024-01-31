@@ -1,30 +1,24 @@
 package com.fcprovin.goal.check.config;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.fcprovin.goal.check.config.security.CustomUserDetailsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import static org.springframework.security.config.Customizer.withDefaults;
-import static org.springframework.security.core.userdetails.User.withUsername;
-import static org.springframework.security.crypto.factory.PasswordEncoderFactories.createDelegatingPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
-	@Value("${user.details.username}")
-    private String username;
-
-    @Value("${user.details.password}")
-    private String password;
+	private final CustomUserDetailsService userDetailsService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -37,21 +31,19 @@ public class SecurityConfig {
 				.httpBasic(withDefaults())
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login")
-						.defaultSuccessUrl("/member", true)
+						.defaultSuccessUrl("/me", true)
 				)
 				.rememberMe(withDefaults())
 				.logout(logout -> logout
 						.logoutSuccessUrl("/login")
 						.permitAll()
 				)
+				.userDetailsService(userDetailsService)
 				.build();
     }
 
 	@Bean
-    public InMemoryUserDetailsManager userDetailsService() {
-        return new InMemoryUserDetailsManager(withUsername(username)
-                .password(createDelegatingPasswordEncoder().encode(password))
-                .roles("ADMIN")
-                .build());
-    }
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 }

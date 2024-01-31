@@ -2,18 +2,17 @@ package com.fcprovin.goal.check.web.service;
 
 import com.fcprovin.goal.check.domain.assist.Assist;
 import com.fcprovin.goal.check.domain.assist.AssistRepository;
+import com.fcprovin.goal.check.domain.attend.AttendRepository;
 import com.fcprovin.goal.check.domain.goal.Goal;
 import com.fcprovin.goal.check.domain.goal.GoalRepository;
 import com.fcprovin.goal.check.domain.match.Match;
 import com.fcprovin.goal.check.domain.match.MatchRepository;
 import com.fcprovin.goal.check.domain.member.MemberRepository;
+import com.fcprovin.goal.check.notification.service.SlackWebhookService;
 import com.fcprovin.goal.check.web.dto.form.GoalAddForm;
 import com.fcprovin.goal.check.web.dto.form.MatchAddForm;
 import com.fcprovin.goal.check.web.dto.form.MatchModifyForm;
-import com.fcprovin.goal.check.web.dto.response.GoalResponse;
-import com.fcprovin.goal.check.web.dto.response.MatchDetailResponse;
-import com.fcprovin.goal.check.web.dto.response.MatchResponse;
-import com.fcprovin.goal.check.web.dto.response.MemberResponse;
+import com.fcprovin.goal.check.web.dto.response.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +36,8 @@ public class MatchService {
 	private final MatchRepository matchRepository;
 	private final MemberRepository memberRepository;
 	private final AssistRepository assistRepository;
+	private final AttendRepository attendRepository;
+	private final SlackWebhookService webhookService;
 
 	@Transactional(readOnly = true)
 	public List<MatchResponse> list(LocalDate year) {
@@ -59,6 +60,13 @@ public class MatchService {
 				.toList());
 
 		return response;
+	}
+
+	@Transactional(readOnly = true)
+	public List<AttendResponse> attends(Long id) {
+		return attendRepository.findByMatchId(id).stream()
+				.map(AttendResponse::of)
+				.toList();
 	}
 
 	public Match add(MatchAddForm form) {
@@ -112,6 +120,8 @@ public class MatchService {
 			assistRepository.save(form.ofAssistEntity(memberRepository.findById(form.getAssistMemberId())
 				.orElseThrow(() -> new IllegalArgumentException("Assist member not found")), goal));
 		}
+
+		webhookService.execute(goal);
 
 		return match;
 	}
