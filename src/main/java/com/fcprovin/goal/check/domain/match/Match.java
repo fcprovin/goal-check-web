@@ -1,6 +1,7 @@
 package com.fcprovin.goal.check.domain.match;
 
 import com.fcprovin.goal.check.common.entity.BaseTime;
+import com.fcprovin.goal.check.domain.attend.Attend;
 import com.fcprovin.goal.check.domain.goal.Goal;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -31,6 +32,9 @@ public class Match extends BaseTime {
 
     @OneToMany(mappedBy = "match")
     private final List<Goal> goals = new ArrayList<>();
+
+    @OneToMany(mappedBy = "match")
+    private final List<Attend> attends = new ArrayList<>();
 
     @Builder
     public Match(String otherTeamName, LocalDateTime date) {
